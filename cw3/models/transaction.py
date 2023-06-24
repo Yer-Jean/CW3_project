@@ -47,3 +47,4 @@ if __name__ == '__main__':
                               {"amount": "79931.03", "currency": {"name": "руб.", "code": "RUB"}},
                               "Счет 72731966109147704472", "Visa Gold 5999414228426353")
     print(repr(transaction))
+    print(transaction)
