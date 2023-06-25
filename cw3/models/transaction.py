@@ -16,16 +16,25 @@ class Transaction:
         self.transaction_to: str = self.numbers_masking(transaction_to)
         self.transaction_amount: str = transaction_amount['amount']
         self.transaction_currency: str = transaction_amount['currency']['name']
-
+        # Разделитель номеров карт или счетов, если есть источник перевода, то разделитель есть, иначе - нет
         self.separator: str = ' -> ' if transaction_from else ''
 
     @staticmethod
     def convert_datetime_to_date(transaction_date: str) -> str:
+        """
+        Функция принимает на входе строку с датой и временем в ISO-формате
+        и возвращает строку только с датой
+        """
         date_: datetime = datetime.fromisoformat(transaction_date)
         return date_.strftime("%d.%m.%Y")
 
     @staticmethod
     def numbers_masking(account_number: str) -> str:
+        """
+        Функция принимает на входе строку с номером кредитной карты
+        или номером счета и возвращает их с частично замаскированными
+        символом '*' цифрами
+        """
         if re.findall(r'(\d{20})', account_number):
             return re.sub(r'\d{16}(\d{4})', r'**\1', account_number)
         return re.sub(r'(\d{4})(\d{2})\d{6}(\d{4})', r'\1 \2** **** \3', account_number)
@@ -45,6 +54,7 @@ class Transaction:
 
 
 if __name__ == '__main__':
+    # Тестовый блок для тестирования методов __str__ и __repr__
     transaction = Transaction(596171168, "2018-07-11T02:26:18.671407", "Перевод организации",
                               {"amount": "79931.03", "currency": {"name": "руб.", "code": "RUB"}},
                               "Счет 72731966109147704472", "Visa Gold 5999414228426353")

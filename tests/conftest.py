@@ -2,7 +2,7 @@ import pytest
 
 
 @pytest.fixture
-def test_data():
+def data_for_tests():
     return[
         {
             "id": 716496732,
