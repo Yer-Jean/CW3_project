@@ -8,7 +8,7 @@ class Transaction:
                  transaction_description: str,
                  transaction_amount: dict,
                  transaction_to: str,
-                 transaction_from: str = None) -> None:
+                 transaction_from: str) -> None:
         self.transaction_id: int = transaction_id
         self.transaction_date: str = self.convert_datetime_to_date(transaction_date)
         self.transaction_description: str = transaction_description
@@ -19,11 +19,13 @@ class Transaction:
 
         self.separator: str = ' -> ' if transaction_from else ''
 
-    def convert_datetime_to_date(self, transaction_date: str) -> str:
+    @staticmethod
+    def convert_datetime_to_date(transaction_date: str) -> str:
         date_: datetime = datetime.fromisoformat(transaction_date)
         return date_.strftime("%d.%m.%Y")
 
-    def numbers_masking(self, account_number: str) -> str:
+    @staticmethod
+    def numbers_masking(account_number: str) -> str:
         if re.findall(r'(\d{20})', account_number):
             return re.sub(r'\d{16}(\d{4})', r'**\1', account_number)
         return re.sub(r'(\d{4})(\d{2})\d{6}(\d{4})', r'\1 \2** **** \3', account_number)
