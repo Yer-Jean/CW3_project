@@ -38,9 +38,9 @@ class Transaction:
         или номером счета и возвращает их с частично замаскированными
         символом '*' цифрами
         """
-        if re.findall(r'(\d{20})', account_number):
-            return re.sub(r'\d{16}(\d{4})', r'**\1', account_number)
-        return re.sub(r'(\d{4})(\d{2})\d{6}(\d{4})', r'\1 \2** **** \3', account_number)
+        if re.findall(r'(\d{20})', account_number):                     # Если в полученной строке 20-и значное число,
+            return re.sub(r'\d{16}(\d{4})', r'**\1', account_number)    # то маскируем его по шаблону 'Счет'. Иначе по
+        return re.sub(r'(\d{4})(\d{2})\d{6}(\d{4})', r'\1 \2** **** \3', account_number)  # шаблону 'Кредитная карта'
 
     def __repr__(self) -> str:
         return f'ID: {self.transaction_id}\n' \
@@ -62,4 +62,4 @@ if __name__ == '__main__':
                               {"amount": "79931.03", "currency": {"name": "руб.", "code": "RUB"}},
                               "Счет 72731966109147704472", "Visa Gold 5999414228426353")
     print(repr(transaction))
-    print(transaction)
+    print(str(transaction))
