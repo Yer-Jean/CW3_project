@@ -15,8 +15,7 @@ def main():
                                   transaction_amount=transaction['operationAmount'],
                                   transaction_to=transaction['to'],
                                   transaction_from=transaction.get('from'))
-        print(transaction)  # Одновременно выводим на печать вновь созданный экземпляр,
-                            # используя метод класса __str__
+        print(transaction)  # Одновременно выводим на печать вновь созданный экземпляр, используя метод класса __str__
 
 
 if __name__ == '__main__':

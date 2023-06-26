@@ -4,6 +4,10 @@ from settings import DATA_PATH
 
 
 class Repository:
+    """
+    Класс Repository содержит всё, что необходимо для чтения данных из
+    файла и их подготовке для дальнейшей работы программы
+    """
     def __init__(self):
         self.data_path: str = DATA_PATH
 
@@ -17,7 +21,7 @@ class Repository:
                 return json.load(file)
         except FileNotFoundError:
             print('\nНе найден файл с данными\n')
-            exit()
+            exit(2)
 
     def get_all_transactions(self) -> list[dict]:
         """
@@ -25,8 +29,7 @@ class Repository:
         """
         return self.read_json()
 
-    @staticmethod
-    def remove_empty_transactions(all_transactions: list[dict]) -> list[dict]:
+    def remove_empty_transactions(self, all_transactions: list[dict]) -> list[dict]:
         """
         Метод удаляет пустые записи из всех полученных трансакций
         и возвращает только непустые
@@ -34,8 +37,7 @@ class Repository:
         all_transactions.remove({})
         return all_transactions
 
-    @staticmethod
-    def get_executed_transactions(non_empty_transactions: list[dict]) -> list[dict]:
+    def get_executed_transactions(self, non_empty_transactions: list[dict]) -> list[dict]:
         """
         Метод фильтрует трансакции по признаку EXECUTED (выполненные)
         и возвращает только их
@@ -47,8 +49,11 @@ class Repository:
         Метод возвращает пять последних по времени трансакций. Предварительно вычистив все
         трансакции от ошибочных, и отфильтровав их по выполненным
         """
+        # Получаем из файла все записи трансакций
         all_transactions: list[dict] = self.get_all_transactions()
+        # Удаляем из полученных записей пустые
         non_empty_transaction: list[dict] = self.remove_empty_transactions(all_transactions)
+        # Фильтруем эти записи по признаку выполнения (EXECUTED)
         executed_transactions: list[dict] = self.get_executed_transactions(non_empty_transaction)
-        # Возвращаем пять последних трансакций, отсортировав список по дате
+        # И возвращаем пять последних трансакций, отсортировав список по дате
         return sorted(executed_transactions, key=lambda dictionary: dictionary['date'], reverse=True)[:5]

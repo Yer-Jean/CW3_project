@@ -3,6 +3,9 @@ from datetime import datetime
 
 
 class Transaction:
+    """
+    Класс Transaction содержит и обрабатывает поля отдельной трансакции
+    """
     def __init__(self, transaction_id: int,
                  transaction_date: str,
                  transaction_description: str,
@@ -22,7 +25,7 @@ class Transaction:
     @staticmethod
     def convert_datetime_to_date(transaction_date: str) -> str:
         """
-        Функция принимает на входе строку с датой и временем в ISO-формате
+        Метод принимает на входе строку с датой и временем в ISO-формате
         и возвращает строку только с датой
         """
         date_: datetime = datetime.fromisoformat(transaction_date)
@@ -31,7 +34,7 @@ class Transaction:
     @staticmethod
     def numbers_masking(account_number: str) -> str:
         """
-        Функция принимает на входе строку с номером кредитной карты
+        Метод принимает на входе строку с номером кредитной карты
         или номером счета и возвращает их с частично замаскированными
         символом '*' цифрами
         """
