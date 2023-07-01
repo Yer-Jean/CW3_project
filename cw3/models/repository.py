@@ -34,8 +34,11 @@ class Repository:
         Метод удаляет пустые записи из всех полученных трансакций
         и возвращает только непустые
         """
-        all_transactions.remove({})
-        return all_transactions
+        # all_transactions.remove({})
+        # return all_transactions
+
+        # Изменил код после проверки, так как remove упадет, если не найдет пустой список
+        return list(filter(None, all_transactions))
 
     def get_executed_transactions(self, non_empty_transactions: list[dict]) -> list[dict]:
         """
